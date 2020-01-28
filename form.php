@@ -16,45 +16,45 @@ require_once('classes/user.php')
 </head>
 
 <body class="container">
-<div class="col-6 mx-auto">
-    <form method="post">
-        <div class="form-group">
-            <label for="name">Nom</label>
-            <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Nom">
-        </div>
-        <div class="form-group">
-            <label for="firstname">Prénom</label>
-            <input type="text" class="form-control" name="firstname" id="firstname" aria-describedby="emailHelp" placeholder="Prénom">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="phone">Téléphone</label>
-            <input type="number" class="form-control" name="phone" id="phone" aria-describedby="emailHelp" placeholder="Téléphone">
-        </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder=">Mot de passe">
-        </div>
-        <input type="submit" class="btn btn-primary" name="submitted" value="Envoyer">
-    </form>
+    <div class="col-6 mx-auto">
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Nom" required>
+            </div>
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" class="form-control" name="firstname" id="firstname" aria-describedby="emailHelp" placeholder="Prénom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Téléphone</label>
+                <input type="number" class="form-control" name="phone" id="phone" aria-describedby="emailHelp" placeholder="Téléphone" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder=">Mot de passe" required>
+            </div>
+            <input type="submit" class="btn btn-primary" name="submitted" value="Envoyer">
+        </form>
 
-    <?php
+        <?php
 
-    if(isset($_POST['submitted'])){
-        $x = new Users($_POST['name'],$_POST['firstname'], $_POST['email'], $_POST['phone'], $_POST['password']);
-        $x->save();
-    }
-
-
-?>
+        if (isset($_POST['submitted'])) {
+            $x = new Users($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['phone'], $_POST['password']);
+            $x->save();
+        }
 
 
+        ?>
 
 
-</div>
+
+
+    </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 </body>

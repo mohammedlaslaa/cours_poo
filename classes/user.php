@@ -19,14 +19,31 @@ class Users {
 
 
     function save(){
-        $x = [["name" => $this->name,
+        $y = json_decode(file_get_contents('user.json'), true);
+        $resId = array_column($y, 'id');
+        if(!empty($resId)) {
+            $Id = max($resId)+1;
+        }else{
+            $Id = 0;
+        }
+        $x = [[
+            "id" => $Id,
+            "name" => $this->name,
         "firstname" => $this->firstname,
         "email" => $this->email,
         "phone" => $this->phone,
         "password" => $this->password]];
-        $y = json_decode(file_get_contents('user.json'), true);
+        
         $z = array_merge($y, $x);
         file_put_contents('user.json', json_encode($z));
+    }
+
+    public static function getAllUser(){
+        
+    }
+
+    public static function getUserById(){
+
     }
 
     public function getPhone()
