@@ -19,15 +19,14 @@ class Users {
 
 
     function save(){
-        $x = [ "name" => $this->name,
+        $x = [["name" => $this->name,
         "firstname" => $this->firstname,
         "email" => $this->email,
         "phone" => $this->phone,
-        "password" => $this->password];
-        $y = array(file_get_contents('coucou.txt'));
-        $z = array_push($y, $x);
-
-        file_put_contents('coucou.txt', $z);
+        "password" => $this->password]];
+        $y = json_decode(file_get_contents('user.json'), true);
+        $z = array_merge($y, $x);
+        file_put_contents('user.json', json_encode($z));
     }
 
     public function getPhone()

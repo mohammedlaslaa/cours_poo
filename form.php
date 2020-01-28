@@ -45,7 +45,7 @@ require_once('classes/user.php')
 
     if(isset($_POST['submitted'])){
         $x = new Users($_POST['name'],$_POST['firstname'], $_POST['email'], $_POST['phone'], $_POST['password']);
-        file_put_contents ('coucou.txt', $x->save() );
+        $x->save();
     }
 
 
