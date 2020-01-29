@@ -31,13 +31,14 @@ require_once('classes/user.php')
                 <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
             </div>
             <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
+            </div>
+            <div class="form-group">
                 <label for="phone">Téléphone</label>
                 <input type="number" class="form-control" name="phone" id="phone" aria-describedby="emailHelp" placeholder="Téléphone">
             </div>
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder=">Mot de passe">
-            </div>
+            
             <input type="submit" class="btn btn-primary" name="submitted" value="Envoyer">
         </form>
 
@@ -46,7 +47,11 @@ require_once('classes/user.php')
         if (isset($_POST['submitted'])) {
             $x = new Users($_POST);
             $x->save();
+            // $x->getObjectJson();
         }
+
+        // Users::getAllUser();
+        // Users::getUserById(3);
 
         ?>
 

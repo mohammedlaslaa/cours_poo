@@ -2,39 +2,125 @@
 
 class Users
 {
-
     private $name;
     private $firstname;
     private $email;
-    private $phone;
     private $password;
+    private $phone;
     private $errors = [];
 
-    function __construct($donnee)
+    public function hydrate(array $donnees)
     {
-        if ($name !== "" && $firstname !== "") {
-            $this->name = htmlspecialchars($name);
-            $this->firstname = htmlspecialchars($firstname);
-            if (preg_match('/^\w(\d|\w|[.]){0,30}[@](\d|\w|[.]){0,10}[.](\d|\w){2,4}/', $email)) {
-                $this->email = htmlspecialchars($email);
-                if (preg_match('/^\d{10}/', $phone)) {
-                    $this->phone = htmlspecialchars($phone);
-                    if (strlen($password) >= 8) {
-                        $this->password = htmlspecialchars($password);
-                    } else {
-                        array_push($this->errors, 'Mot de passe incorrect');
-                    }
-                } else {
-                    array_push($this->errors, 'Numéro de téléphone invalide');
-                }
-            } else {
-                array_push($this->errors, 'Email Invalide');
+        foreach ($donnees as $key => $value) {
+            $method = 'set' . ucfirst($key);
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
             }
-        } else {
-            array_push($this->errors, 'Tous les champs doivent être compléter');
         }
     }
 
+    function __construct($donnee)
+    {
+        $this->hydrate($donnee);
+    }
+
+    public static function getAllUser()
+    {
+        $users = json_decode(file_get_contents('user.json'));
+        foreach ($users as $val) {
+            echo "<div class='d-flex'>";
+            foreach ($val as $key => $user) {
+                echo "<p>" . $key . " " . $user . "</p>";
+            }
+            echo "</div>";
+        }
+    }
+
+    public static function getUserById($id)
+    {
+        $users = json_decode(file_get_contents('user.json'));
+        foreach ($users as $key => $val) {
+            echo "<div class='d-flex'>";
+
+            if ($key == $id) {
+                foreach ($val as $key => $user) {
+                    echo "<p>" . $key . " " . $user . "</p>";
+                }
+            }
+            echo "</div>";
+        }
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        if (preg_match('/^\w(\d|\w|[.]){0,30}[@](\d|\w|[.]){0,10}[.](\w){2,4}/', $email)) {
+            $this->email = htmlspecialchars($email);
+        } else {
+            array_push($this->errors, 'Email Invalide');
+        }
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        if (strlen($password) >= 8) {
+            $this->password = htmlspecialchars($password);
+        } else {
+            array_push($this->errors, 'Mot de passe incorrect');
+        }
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setPhone($phone)
+    {
+        if (preg_match('/^\d{10}$/', $phone)) {
+            $this->phone = htmlspecialchars($phone);
+        } else {
+            array_push($this->errors, 'Numéro de téléphone invalide');
+        }
+    }
+
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname($firstname)
+    {
+        if ($firstname !== "") {
+            $this->firstname = htmlspecialchars($firstname);
+        } else {
+            array_push($this->errors, 'Prénom invalide');
+        }
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        if ($name !== "") {
+            $this->name = htmlspecialchars($name);
+        } else {
+            array_push($this->errors, 'Nom invalide');
+        }
+    }
 
     function save()
     {
@@ -64,82 +150,8 @@ class Users
         }
     }
 
-    public static function getAllUser()
-    {
-    }
-
-    public static function getUserById()
-    {
-    }
-
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function hydrate(array $donnees)
-    {
-        foreach ($donnees as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
+    // function getObjectJson(){
+    //     $name = $this->name . '.json';
+    //     file_put_contents($name, json_encode(get_object_vars($this)));
+    // }
 }
